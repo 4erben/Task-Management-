@@ -8,7 +8,7 @@ export default function SingleTaskPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {id} = useParams();
-    const task = tasks.find(task=>task.id === id);
+    const task = tasks.find(task=>task._id === id);
         
     const handleDeleteTask = ()=>{
       dispatch(deleteTask(id))
