@@ -17,11 +17,7 @@ const port = process.env.PORT || 8080;
 //use middlewares on the entire app
 app.use(express.json());
 app.use(express.static("public"));
-app.use(cors({
-    origin: 'http://localhost:5173', // Replace this with your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
-    credentials: true // If you need to include cookies or authorization headers
-  }))
+app.use(cors())
 
 
 
