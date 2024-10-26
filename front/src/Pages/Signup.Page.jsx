@@ -34,7 +34,7 @@ export default function Signup() {
       console.log('Sign-up successful:', data.data);
       // Store user data in localStorage
       localStorage.setItem('user', JSON.stringify(data.data));
-      navigate("/sigin");
+      navigate("/signin");
     },
     onError: (error) => {
       console.error('Error signing up:', error.response.data);
