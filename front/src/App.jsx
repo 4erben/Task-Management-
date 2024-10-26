@@ -2,7 +2,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Home from './Pages/Home.Page';
 import AddTask from './Pages/AddTask.Page';
-import Header from './Components/header';
+import Header from './Components/Header';
 import AllTasks from './Pages/AllTasks.Page';
 import SingleTaskPage from './Pages/SingleTask.Page';
 import EditTask from './Pages/EditTask.Page';
