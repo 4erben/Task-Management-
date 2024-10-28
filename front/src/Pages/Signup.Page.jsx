@@ -47,10 +47,10 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen mx-auto">
+    <div className="flex flex-col items-center justify-center mx-auto">
       <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-md w-full max-w-sm">
         <div className="text-center mb-6">
-          <p className="text-gray-100 font-semibold">Login to your account</p>
+          <p className="text-gray-100 font-semibold">Sign up</p>
         </div>
         <div className="login-form">
           <form onSubmit={handleSubmit(onSubmit)} method="post">
@@ -91,7 +91,7 @@ export default function Signup() {
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
             <button type="submit" className="w-full py-2 bg-indigo-600 text-white font-bold rounded hover:bg-indigo-500 transition duration-200">
-              Login
+              Sign up
             </button>
           </form>
         </div>

@@ -1,5 +1,5 @@
 #root{
-  background-image: url("./assets//background.jpg");
+  background-image: url("../background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   @apply flex flex-col;

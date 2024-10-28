@@ -18,6 +18,7 @@ const userSlice = createSlice({
             state.name = name;
         },
         logOut:(state,action)=>{
+            localStorage.removeItem("user");
             state.accessToken = null;
             state.refreshToken = null;
             state.name= null;

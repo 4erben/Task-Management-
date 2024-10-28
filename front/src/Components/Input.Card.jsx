@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from "yup";
 import {/* addTask, */ createNewTask} from "../Redux/Slices/tasks.Slice";
 import { useNavigate } from 'react-router-dom';
+import { taskSchema} from "../utils/Validations/TaskSchema";
 
 
 
@@ -15,23 +16,11 @@ export default function InputCard() {
     const navigate = useNavigate();
     const token = useSelector(state=>state.user.accessToken);
 
-    const taskSchema = Yup.object().shape({
-        image:Yup.mixed()
-        .required("Image is required")
-        .test("fileType","Unsupported file type",(value)=>{
-            return value && value[0]  && ['image/jpeg', 'image/png', 'image/gif'].includes(value[0].type);
-        })
-        .test("fileSize", "File size is too large (max 2 MB)", (value) => {
-            return value && value[0] && value[0].size <= 2000000; // 2 MB
-        }),
-        title: Yup.string().required("Title is required").min(3, "Title must be at least 3 characters"),
-        description: Yup.string().required("Description is required"),
-        priority: Yup.string().oneOf(["low", "medium", "high"], "Priority is required"),
-        state: Yup.string().oneOf(["todo", "doing", "done"], "State is required"),
-    });
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(taskSchema),
-      });
+    const form = useForm({resolver:yupResolver(taskSchema)});
+
+    const {register , handleSubmit , formState:{ errors} } = form;
+
+
     //handle submit 
     const onSubmit = (data) => {
         const reader = new FileReader();
@@ -91,17 +80,29 @@ export default function InputCard() {
             </div>
             <div className='input-container'>
                 <label htmlFor='input-title'>Enter The Task Title</label>
-                <input id='input-title' type='text' {...register('title')} />
+                <input 
+                id='input-title' 
+                type='text' 
+                {...register('title')} 
+                />
                 {errors.title && <p className="text-red-500">{errors.title.message}</p>}
             </div>
             <div className='input-container'>
                 <label>Enter The Task Description</label>
-                <input id='input-description' type='text' {...register('description')} />
+                <input 
+                id='input-description' 
+                type='text' 
+                {...register('description')} 
+                />
                 {errors.description && <p className="text-red-500">{errors.description.message}</p>}
             </div>
             <div className='input-container'>
                 <label htmlFor='input-priority'>Enter The Task Priority</label>
-                <select id='input-priority' {...register('priority')} defaultValue="low">
+                <select 
+                id='input-priority' 
+                {...register('priority')} 
+                defaultValue="low"
+                >
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>
@@ -110,7 +111,10 @@ export default function InputCard() {
             </div>
             <div className='input-container'>
                 <label htmlFor='input-state'>Enter The Task State</label>
-                <select id='input-state' {...register('state')}>
+                <select 
+                id='input-state' 
+                {...register('state')}
+                >
                     <option value="todo">Todo</option>
                     <option value="doing">Doing</option>
                     <option value="done">Done</option>

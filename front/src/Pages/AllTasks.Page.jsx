@@ -13,7 +13,8 @@ export default function AllTasks() {
     const tasks = useSelector(state=>state.tasks.tasks);
     const selectedState = useSelector(state=>state.tasks.selectedState);
     const selectedPriority = useSelector(state=>state.tasks.selectedPriority);
-    const [filteredTasks, setFilteredTasks] = useState(tasks);
+   /*  const [filteredTasks, setFilteredTasks] = useState(tasks); */
+    const [searchValue, setSearchValue] = useState("");
 
     useEffect(()=>{
       dispatch(getUserTasks(token))
@@ -22,28 +23,43 @@ export default function AllTasks() {
 
 
      // Filter tasks based on selected state and priority
-     useEffect(() => {
+    // Update filtered tasks based on filters and search
+    const filteredTasks = tasks.filter((task) => {
+      const stateMatch = selectedState === "all" || task.state === selectedState;
+      const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
+      const titleMatch = task.title.toLowerCase().includes(searchValue.toLowerCase());
+      return stateMatch && priorityMatch && titleMatch;
+  });
+
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value.toLowerCase());
+};
+const handleAddTask = ()=>{
+  navigate("/addtask")
+}
+
+    /*  useEffect(() => {
       const filtered = tasks.filter((task) => {
           const stateMatch = selectedState === "all" || task.state === selectedState;
           const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
           return stateMatch && priorityMatch;
       });
       setFilteredTasks(filtered);
-  }, [tasks, selectedState, selectedPriority]);
+  }, [tasks, selectedState, selectedPriority]); */
     /* let filteredTasks = tasks.filter((task)=>{
       const stateMatch = selectedState ==="all" || task.state === selectedState;
       const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
       return stateMatch && priorityMatch;
   }); */
-  const handleSearch = (e)=>{
+/*   const handleSearch = (e)=>{
     const searchValue = e.target.value.toLowerCase();
+    console.log(tasks[0].title.toLowerCase().includes("s"));
+    
         setFilteredTasks(tasks.filter((task) =>
             task.title.toLowerCase().includes(searchValue)
         ));
-  }
-  const handleAddTask = ()=>{
-    navigate("/addtask")
-}
+  } */
+
   return (
     <section className='mx-auto pt-10 md:pt-20 w-full flex flex-col justify-start items-center'>
         <div className='px-4 text-xl md:text-3xl text-white text-center'>

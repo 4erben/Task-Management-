@@ -47,7 +47,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen mx-auto">
+    <div className="flex flex-col items-center justify-center mx-auto">
       <div className="bg-white bg-opacity-20 p-8 rounded-lg shadow-md w-full max-w-sm">
         <div className="text-center mb-6">
           <p className="text-gray-100 font-semibold">Login to your account</p>
