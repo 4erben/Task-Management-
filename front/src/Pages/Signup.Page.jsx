@@ -1,30 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-
+import { signupSchema } from '../utils/Validations/UserSchema';
 // Validation schema using Yup
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required('Name is required'),
-  email: Yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
-  password: Yup.string()
-    .min(1, 'Password must be at least 1 characters')
-    .required('Password is required')
-});
 
 export default function Signup() {
-    
-    
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const [serverError, setServerError] = useState('');
+  const [serverResponse, setServerResponse] = useState('');
+  
   const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(signupSchema)
   });
     // Mutation to post sign-up data
     const mutation = useMutation((formData) => {
@@ -34,10 +24,17 @@ export default function Signup() {
       console.log('Sign-up successful:', data.data);
       // Store user data in localStorage
       localStorage.setItem('user', JSON.stringify(data.data));
-      navigate("/signin");
+      setServerResponse(data.data.message);
+      setServerError("")
+      setTimeout(()=>{
+        navigate("/signin");
+      },2000)
+      
     },
     onError: (error) => {
       console.error('Error signing up:', error.response.data);
+      setServerError(error.response.data || 'An error occurred during sign up.');
+      setServerResponse("")
     }
   });
   const onSubmit = (data) => {
@@ -90,6 +87,8 @@ export default function Signup() {
               </div>
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
+            {serverResponse && <p className="text-white bg-green-800 rounded-md py-2 font-bold text-center text-sm mb-4">{serverResponse}</p>}
+            {serverError && <p className="text-white bg-red-500 rounded-md py-2 font-bold text-center text-sm mb-4">{serverError}</p>}
             <button type="submit" className="w-full py-2 bg-indigo-600 text-white font-bold rounded hover:bg-indigo-500 transition duration-200">
               Sign up
             </button>

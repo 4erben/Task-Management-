@@ -5,7 +5,6 @@ export const taskSchema = Yup.object().shape({
     image:Yup.mixed()
     .required("Image is required")
     .test("fileType","Unsupported file type",(value)=>{
-        console.log(value);
         return value && value[0]  && ['image/jpeg', 'image/png', 'image/gif'].includes(value[0].type);
     })
     .test("fileSize", "File size is too large (max 100 KB)", (value) => {

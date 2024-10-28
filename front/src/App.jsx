@@ -11,6 +11,7 @@ import Signup from './Pages/Signup.Page';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { setUser } from './Redux/Slices/user.Slice';
+import { getUserTasks } from './Redux/Slices/tasks.Slice';
 
 
 function App() {
@@ -23,7 +24,6 @@ function App() {
   useEffect(()=>{
     if(localStorage.getItem("user")){
       const user = JSON.parse( localStorage.getItem("user"));
-      console.log(user);
       dispatch(setUser(user))
     }else{
       navigate("/signin")

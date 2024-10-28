@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/users.model");
-const { generateAccessToken } = require("../utils/tokenUtils");
+const { generateAccessToken, generateRefreshToken } = require("../utils/tokenUtils");
 
 const refreshToken = async(req,res)=>{
     const { refreshToken } = req.body;
@@ -22,8 +22,9 @@ const refreshToken = async(req,res)=>{
             id: payload.userId
         } */
         const newAccessToken = generateAccessToken(user);
+        const newRefreshToken = generateRefreshToken(user);
 
-        res.status(201).json({accessToken: newAccessToken});
+        res.status(201).json({accessToken: newAccessToken, refreshToken:newRefreshToken});
 
     }catch(error){
         res.status(403).json({message:"Invalid or expired refresh token",error:error.message});

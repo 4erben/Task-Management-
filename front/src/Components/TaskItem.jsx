@@ -1,11 +1,10 @@
 import React from 'react'
 import { MdOutlineModeEdit , MdDeleteForever } from "react-icons/md";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { /* deleteTask, */ deleteUserTask, editTask, editUserTask } from '../Redux/Slices/tasks.Slice';
+import {  deleteUserTask,editUserTask, getUserTasks } from '../Redux/Slices/tasks.Slice';
 export default function TaskItem({title ="Title",id,state,priority}) {
   const navigate = useNavigate();
-  const token = useSelector(state=>state.user.accessToken);
   const dispatch = useDispatch();
   const displayedTitle = title.length > 15 ? title.slice(0, 15) + '...' : title;
 
@@ -13,7 +12,8 @@ export default function TaskItem({title ="Title",id,state,priority}) {
     navigate(`/task/${id}`);
   }
   const handleDeleteTask = ()=>{
-    dispatch(deleteUserTask({taskId:id,token}))
+    dispatch(deleteUserTask({taskId:id}));
+    dispatch(getUserTasks())
   }
   const handleEditTask = ()=>{
     navigate(`/edit-task/${id}`)
@@ -21,22 +21,16 @@ export default function TaskItem({title ="Title",id,state,priority}) {
   const handleChangePriority = (e)=>{
     const newPriority = e.target.value;
     dispatch(editUserTask({
-      token,taskId:id,taskData :{priority: newPriority}
-  }))
-    /* dispatch(editTask({
-      id: id,
-      updatedData:{priority:newPriority}
-    })) */
+      taskId:id,taskData :{priority: newPriority}
+  }));
+  dispatch(getUserTasks())
   }
   const handleChangeState = (e)=>{
     const newState = e.target.value;
     dispatch(editUserTask({
-      token,taskId:id,taskData :{state: newState}
+      taskId:id,taskData :{state: newState}
   }))
-    /* dispatch(editTask({
-      id: id,
-      updatedData:{state:newState}
-    })) */
+  dispatch(getUserTasks())
   }
   return (
     <li className='task-item  capitalize rounded-lg cursor-pointer hover:bg-gray-500 hover:bg-opacity-45 flex items-center justify-center flex-col sm:flex-row my-3' >

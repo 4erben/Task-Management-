@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from "yup";
-import { editTask, editUserTask} from "../Redux/Slices/tasks.Slice";
+import {  editUserTask} from "../Redux/Slices/tasks.Slice";
 import { useNavigate, useParams } from 'react-router-dom';
 import { editTaskSchema } from '../utils/Validations/TaskSchema';
 
@@ -21,12 +21,6 @@ export default function EditTask() {
 
     
     const [imagePreview, setImagePreview] = useState(task?.image);
-/*     const taskSchema = Yup.object().shape({
-        title: Yup.string().required("Title is required").min(3, "Title must be at least 3 characters"),
-        description: Yup.string().required("Description is required"),
-        priority: Yup.string().oneOf(["low", "medium", "high"], "Priority is required"),
-        state: Yup.string().oneOf(["todo", "doing", "done"], "State is required"),
-    }); */
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(editTaskSchema),
         defaultValues:task
@@ -57,7 +51,7 @@ export default function EditTask() {
                     updatedData: taskData
                 })); */
                 // Navigate after the dispatch
-                navigate("/");
+                navigate("/alltasks");
             };
             reader.readAsDataURL(data.image[0]); // Convert the image to Base64
         } else {
@@ -72,7 +66,7 @@ export default function EditTask() {
                 updatedData: taskData
             })); */
             // Navigate after the dispatch
-            navigate("/");
+            navigate("/alltasks");
         }
     };
     

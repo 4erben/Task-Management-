@@ -12,7 +12,6 @@ const userSlice = createSlice({
     reducers:{
         setUser:(state,action)=>{
             const {accessToken , refreshToken , name} = action.payload;
-            console.log(action.payload);
             state.accessToken = accessToken;
             state.refreshToken = refreshToken;
             state.name = name;

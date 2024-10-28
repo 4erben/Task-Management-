@@ -9,22 +9,22 @@ import { FaPlus } from 'react-icons/fa';
 export default function AllTasks() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = useSelector(state=>state.user.accessToken);
     const tasks = useSelector(state=>state.tasks.tasks);
+
+    
     const selectedState = useSelector(state=>state.tasks.selectedState);
     const selectedPriority = useSelector(state=>state.tasks.selectedPriority);
+    /* const [selectedState ,setSelectedState] = useState("all");
+    const [selectedPriority ,setSelectedPriority] = useState("all"); */
    /*  const [filteredTasks, setFilteredTasks] = useState(tasks); */
     const [searchValue, setSearchValue] = useState("");
 
     useEffect(()=>{
-      dispatch(getUserTasks(token))
-    },[tasks])
+      dispatch(getUserTasks())
+    },[])
 
-
-
-     // Filter tasks based on selected state and priority
     // Update filtered tasks based on filters and search
-    const filteredTasks = tasks.filter((task) => {
+    const filteredTasks = tasks?.filter((task) => {
       const stateMatch = selectedState === "all" || task.state === selectedState;
       const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
       const titleMatch = task.title.toLowerCase().includes(searchValue.toLowerCase());
@@ -37,29 +37,13 @@ export default function AllTasks() {
 const handleAddTask = ()=>{
   navigate("/addtask")
 }
-
-    /*  useEffect(() => {
-      const filtered = tasks.filter((task) => {
-          const stateMatch = selectedState === "all" || task.state === selectedState;
-          const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
-          return stateMatch && priorityMatch;
-      });
-      setFilteredTasks(filtered);
-  }, [tasks, selectedState, selectedPriority]); */
-    /* let filteredTasks = tasks.filter((task)=>{
-      const stateMatch = selectedState ==="all" || task.state === selectedState;
-      const priorityMatch = selectedPriority === "all" || task.priority === selectedPriority;
-      return stateMatch && priorityMatch;
-  }); */
-/*   const handleSearch = (e)=>{
-    const searchValue = e.target.value.toLowerCase();
-    console.log(tasks[0].title.toLowerCase().includes("s"));
-    
-        setFilteredTasks(tasks.filter((task) =>
-            task.title.toLowerCase().includes(searchValue)
-        ));
-  } */
-
+/* const handleFilterState =(value)=>{
+  setSelectedState(value);
+};
+const handleFilterPriority= (value)=>{
+  setSelectedPriority(value)
+}
+ */
   return (
     <section className='mx-auto pt-10 md:pt-20 w-full flex flex-col justify-start items-center'>
         <div className='px-4 text-xl md:text-3xl text-white text-center'>
@@ -70,6 +54,7 @@ const handleAddTask = ()=>{
               <FilterSlider 
                 textValues={["all","todo","doing","done"]}
                 filterName={"State"}
+                /* filterFunction={handleFilterState} */
                 filterFunction={filterState}
               />
               <FilterSlider 

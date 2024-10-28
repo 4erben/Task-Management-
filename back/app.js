@@ -7,6 +7,7 @@ const authenticateToken = require("./middlewares/authToken.middleware");
 //importing the routes
 const authRouter = require("./routes/auth.route.js");
 const tasksRouter = require("./routes/tasks.route.js");
+const refreshRouter = require("./routes/refreshToken.route.js");
 
 
 //initializing the app instance
@@ -29,6 +30,7 @@ app.get("/",(req,res)=>{
 //using the routes we created
 app.use("/",authRouter);
 app.use("/tasks",authenticateToken,tasksRouter);
+app.use("/auth",refreshRouter);
 
 
 connectDB().then(()=>{

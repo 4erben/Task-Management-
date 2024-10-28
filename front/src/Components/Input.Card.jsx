@@ -32,10 +32,9 @@ export default function InputCard() {
             priority: data.priority,
             state: data.state,
         };
-        /* dispatch(addTask(taskData)); */
         dispatch(createNewTask({taskData,token}))
             //after the successfuly adding the task navigate to homepage
-            navigate("/")
+            navigate("/alltasks")
                     };
 
     if (data.image[0]) {
