@@ -9,33 +9,41 @@ import EditTask from './Pages/EditTask.Page';
 import Signin from './Pages/Signin.Page';
 import Signup from './Pages/Signup.Page';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setUser } from './Redux/Slices/user.Slice';
-import { getUserTasks } from './Redux/Slices/tasks.Slice';
+import Spinner from './Components/Spinner';
 
 
 function App() {
   const userName = useSelector(state=>state.user.name);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const [loading, setLoading] = useState(true);
 
   //handling refreshing to keep user signed in
   useEffect(()=>{
     if(localStorage.getItem("user")){
-      const user = JSON.parse( localStorage.getItem("user"));
+      const user = JSON.parse(localStorage.getItem("user"));
       dispatch(setUser(user))
-    }else{
+    }/* else{
       navigate("/signin")
-    }
-  },[])
-  
+    } */
+      setLoading(false);
+  },[dispatch]);
 
-/* useEffect(()=>{
-  if(!userName){
-    navigate("/signin")
+
+  if (loading) {
+    return (
+      <div className="App">
+        <Header />
+        <main className='flex flex-1'>
+          <Spinner />
+        </main>
+      </div>
+    ) 
   }
-},[userName]) */
+
+
 
   return (
     <div className='App'>
@@ -49,7 +57,6 @@ function App() {
         <Route path='/edit-task/:id' element={userName?<EditTask /> :<Navigate to="/signin" />} />
         <Route path='/signin' element={!userName? <Signin />: <Navigate to="/"/>} />
         <Route path='/signup' element={!userName? <Signup />: <Navigate to="/"/>} />
-        
       </Routes>
     </main>
     </div>
