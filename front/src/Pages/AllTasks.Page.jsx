@@ -14,14 +14,9 @@ export default function AllTasks() {
     
     const selectedState = useSelector(state=>state.tasks.selectedState);
     const selectedPriority = useSelector(state=>state.tasks.selectedPriority);
-    /* const [selectedState ,setSelectedState] = useState("all");
-    const [selectedPriority ,setSelectedPriority] = useState("all"); */
-   /*  const [filteredTasks, setFilteredTasks] = useState(tasks); */
     const [searchValue, setSearchValue] = useState("");
 
-    useEffect(()=>{
-      dispatch(getUserTasks())
-    },[])
+
 
     // Update filtered tasks based on filters and search
     const filteredTasks = tasks?.filter((task) => {
@@ -33,17 +28,11 @@ export default function AllTasks() {
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value.toLowerCase());
-};
-const handleAddTask = ()=>{
-  navigate("/addtask")
-}
-/* const handleFilterState =(value)=>{
-  setSelectedState(value);
-};
-const handleFilterPriority= (value)=>{
-  setSelectedPriority(value)
-}
- */
+  };
+  const handleAddTask = ()=>{
+    navigate("/addtask")
+  }
+
   return (
     <section className='mx-auto pt-10 md:pt-20 w-full flex flex-col justify-start items-center'>
         <div className='px-4 text-xl md:text-3xl text-white text-center'>

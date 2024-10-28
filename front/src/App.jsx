@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setUser } from './Redux/Slices/user.Slice';
 import Spinner from './Components/Spinner';
+import { getUserTasks } from './Redux/Slices/tasks.Slice';
 
 
 function App() {
@@ -30,6 +31,11 @@ function App() {
     } */
       setLoading(false);
   },[dispatch]);
+
+
+  useEffect(()=>{
+    dispatch(getUserTasks())
+  },[])
 
 
   if (loading) {
