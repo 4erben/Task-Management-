@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from "yup";
-import {/* addTask, */ createNewTask} from "../Redux/Slices/tasks.Slice";
+import {/* addTask, */ createNewTask, getUserTasks} from "../Redux/Slices/tasks.Slice";
 import { useNavigate } from 'react-router-dom';
 import { taskSchema} from "../utils/Validations/TaskSchema";
 
@@ -32,7 +32,8 @@ export default function InputCard() {
             priority: data.priority,
             state: data.state,
         };
-        dispatch(createNewTask({taskData,token}))
+        dispatch(createNewTask({taskData,token}));
+        dispatch(getUserTasks())
             //after the successfuly adding the task navigate to homepage
             navigate("/alltasks")
                     };
