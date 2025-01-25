@@ -38,3 +38,5 @@ connectDB().then(()=>{
     console.log("app started on port", port);
 })
 })
+
+module.exports = app;
